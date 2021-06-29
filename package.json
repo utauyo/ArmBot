@@ -1,0 +1,25 @@
+{
+  "name": "armbot",
+  "version": "1.0.0",
+  "description": "armbot",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "node-notifier": "^9.0.0",
+    "sha256": "^0.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaisarm5/ArmBot.git"
+  },
+  "author": "Madas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaisarm5/ArmBot/issues"
+  },
+  "homepage": "https://github.com/kaisarm5/ArmBot#readme"
+}

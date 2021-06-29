@@ -1,6 +1,7 @@
 const notifier = require('node-notifier');
 const Discord = require("discord.js");
 const path = require('path');
+const sha256 = require('sha256');
 /*
  DISCORD.JS VERSION 12 CODE
 */
@@ -11,7 +12,7 @@ const client = new Discord.Client();
 const config = require("./config.json");
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
-  client.user.setActivity(`Use "Arm commands\" for commands list`);
+  client.user.setActivity(`Use "Arm commands\" for commands list`); 
 });
 
 client.on("guildCreate", guild => {
@@ -73,6 +74,7 @@ if(command === "ping") {
     let sayMessage = args.join(" ");
     message.delete().catch(O_o=>{}); 
 	if(!sayMessage) sayMessage = "No message provided";
+	if(message.author.id === ["571649377442201610", "529202802887491585"]) sayMessage = "cringe";
     message.channel.send(sayMessage);
 	console.log("<@" + messageAuthorId + "> made armbot say \"" + sayMessage + "\"");
   }
@@ -233,10 +235,14 @@ if(command === "ping") {
           const m = await message.channel.send("<:Sadge:755836276883849246>") 
       }
        
-      if(command === "homosex") {
-		const m = await message.channel.send("<@" + messageAuthorId + ">" + " is " + homoMaths);
+	  if(command === "homosex") {
+          if(message.author.id = "704011737900253315") {
+            message.channel.send("<@704011737900253315> is homosex :heart_eyes:"); 
+		} else {
+            const m = await message.channel.send(`<@${message.author.id}> is ` + homoMaths);
 		}
-     
+	  }
+	  
       if(command === "sand") {
           const m = await message.channel.send("https://tenor.com/view/eating-sand-funny-gif-14876749");
       }
@@ -280,10 +286,57 @@ if(command === "ping") {
             } else if(fuck === "me") {
                 const m3 = await message.channel.send("Okay, daddy, uwu")
                 } else {
-                    return;
+                    message.channel.send("FUCK YOU")
                 }
         }
-//
+		
+		if(command === "pingme") {
+			function pissLoop () { message.channel.send("<@" + message.author.id + ">"); }
+				setInterval(pissLoop, 1000);
+		}
+		
+		if(command === "cum") {
+			message.channel.send("https://cdn.discordapp.com/attachments/781253408312786964/841782456029675550/220px-Glass_of_Milk_283365753553229.png")
+		}
+		
+		if(command === "balls") {
+			messsage.channel.send("https://tenor.com/view/puffer-fish-fish-bounce-tap-gif-17107260")
+		}
+		
+		if(command === "testCom") {
+			const messig = message.mentions.members.first();
+			message.channel.send(`${messig}`)
+		}
+		
+		if(command === "login") {
+			var password = args.join(" ");
+			message.delete().catch(O_o=>{});
+			if(message.author.id === "704011737900253315"){
+				const pass = sha256(password);
+				if(pass === "30a989afc82c0a21139573591de4e5ff37994f7d1506a9acf2b5997005c2649f") {
+					message.channel.send("Logged in!");
+					let role = message.guild.roles.cache.find(role => role.id == "848616868428382249")
+					message.author.roles.add(role);
+					function timeout() {
+						user.roles.remove(role)
+						message.channel.send("Time ran out pissbaby!");
+					}
+					setTimeout(timeout,1000)
+				} else {
+					message.channel.send("Fuck off, passwords wrong");
+				}
+			} else {
+				message.channel.send("Bruv you aint arm *stabs you*");
+			}
+		}
+		
+		if(command === "logout") {
+			const user = message.author;
+			let role = message.guild.roles.cache.find(role => role.id == "848616868428382249")
+			user.roles.remove(role);
+			message.channel.send("Logged out!");
+		}
+
 //
 // COMMANDS END
 //
