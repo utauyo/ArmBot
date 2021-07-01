@@ -9,7 +9,8 @@ const sha256 = require('sha256');
 
 const client = new Discord.Client();
 
-const config = require("./config.json");
+//const config = require("./config.json");
+const prefix = process.env.PREFIX
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
   client.user.setActivity(`Use "Arm commands\" for commands list`); 
@@ -26,6 +27,8 @@ client.on("guildDelete", guild => {
    console.log('The bot is now serving ' + client.users.cache.size + ' users, in ' + client.channels.cache.size + ' channels of ' + client.guilds.cache.size + ' guilds.');
   client.user.setActivity(`Use "Arm commands\" for commands list`);
 });
+
+
 
 client.on("message", async message => {
 
@@ -343,4 +346,4 @@ if(command === "ping") {
 //
     });
     
-    client.login(config.token);
+    client.login(process.env.BOT_TOKEN);
