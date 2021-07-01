@@ -10,7 +10,7 @@ const sha256 = require('sha256');
 const client = new Discord.Client();
 
 //const config = require("./config.json");
-const prefix = process.env.PREFIX
+const botprefix = process.env.PREFIX
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
   client.user.setActivity(`Use "Arm commands\" for commands list`); 
@@ -34,7 +34,7 @@ client.on("message", async message => {
 
     if(message.author.bot) return;
      
-    if(message.content.slice(0, config.prefix.length).toLowerCase() !== config.prefix) return;  
+    if(message.content.slice(0, botprefix.length).toLowerCase() !== botprefix) return;  
 
 
 
@@ -46,7 +46,7 @@ client.on("message", async message => {
 // VARIABLES, VALUES START
 //
 //
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(botprefix.length).trim().split(/ +/g);
     
     const command = args.shift().toLowerCase();
     
