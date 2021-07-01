@@ -344,7 +344,3 @@ if(command === "ping") {
     });
     
     client.login(config.token);
-	
-	server.listen(3000, function(){
-    console.log("server is listening on port: 3000");
-	});
