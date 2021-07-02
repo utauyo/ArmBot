@@ -299,7 +299,6 @@ if(command === "ping") {
 		}
 		
 		if(command === "cum") {
-      var args = args.join(" ");
       if(args = "inside me") {
         message.channel.send("what")
       } else {}
