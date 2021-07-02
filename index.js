@@ -302,10 +302,10 @@ if(command === "ping") {
       var cum = args.join(" ");
       if(cum = "inside me") {
         message.channel.send("what")
-      } else {}
+      } else {
 			message.channel.send("https://cdn.discordapp.com/attachments/781253408312786964/841782456029675550/220px-Glass_of_Milk_283365753553229.png")
 		}
-		
+  }
 		if(command === "balls") {
 			messsage.channel.send("https://tenor.com/view/puffer-fish-fish-bounce-tap-gif-17107260")
 		}
