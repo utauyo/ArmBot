@@ -53,6 +53,10 @@ client.on("message", async message => {
     const messageAuthorId = message.author.id;
     
     const homoMaths = Math.round(Math.random())?`not Homosex :heart_eyes:`:`Homosex :heart_eyes:`;
+
+    let joinedArgs = args.join(" ");
+
+    var dementiaCounter = 0;
 //
 //
 // VARIABLES, VALUES END
@@ -311,11 +315,6 @@ if(command === "ping") {
 			messsage.channel.send("https://tenor.com/view/puffer-fish-fish-bounce-tap-gif-17107260")
 		}
 		
-		if(command === "testCom") {
-			const messig = message.mentions.members.first();
-			message.channel.send(`${messig}`)
-		}
-		
 		if(command === "login") {
 			var password = args.join(" ");
 			message.delete().catch(O_o=>{});
@@ -344,6 +343,33 @@ if(command === "ping") {
 			user.roles.remove(role);
 			message.channel.send("Logged out!");
 		}
+
+    if(command === "dementiaCounter") {
+      const dementiaEmbed = new Discord.MessageEmbed()
+      .setColor('#ff0000')
+      .setTitle('Gluzly has talked about dementia')
+      .setAuthor('ArmBot', 'https://cdn.discordapp.com/attachments/747834616773083238/768229321399074846/kaiarm.png', 'http://armbot.madas.xyz/')
+       .addFields(
+          { name: dementiaCounter + 'times', value: '' },
+      )
+    }
+
+    if(command === "dementia") {
+      
+      function dementia()
+      {
+
+        dementiaCounter++;
+
+      }
+
+      if(joinedArgs === "is such a terrible disease im glad i dont have it") {
+          dementia;
+      } else {
+          return;
+      }
+
+    }
 
 //
 // COMMANDS END
