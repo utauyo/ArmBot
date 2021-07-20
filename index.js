@@ -248,7 +248,7 @@ if(command === "ping") {
 	  }
 	  
       if(command === "sand") {
-          const m = await message.channel.send("https://tenor.com/view/eating-sand-funny-gif-14876749");
+          const m = await message.channel.send("https://madas.xyz/snad.gif");
       }
      
       if(command === "link") {
