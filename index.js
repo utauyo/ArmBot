@@ -342,6 +342,11 @@ if(command === "ping") {
 			user.roles.remove(role);
 			message.channel.send("Logged out!");
 		}
+		
+		if(command === "test69") {
+			const image = path.join(__dirname, "kaiarm.png")
+			message.channel.send(image);
+		}
 
 //
 // COMMANDS END
