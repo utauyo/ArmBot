@@ -248,7 +248,7 @@ if(command === "ping") {
 	  }
 	  
       if(command === "sand") {
-          const m = await message.channel.send("https://madas.xyz/snad.gif");
+          const m = await message.channel.send("https://madas.xyz/images/snad.gif");
       }
      
       if(command === "link") {
