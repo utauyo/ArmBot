@@ -9,8 +9,8 @@ const sha256 = require('sha256');
 
 const client = new Discord.Client();
 
-//const config = require("./config.json");
-const botprefix = process.env.PREFIX
+const config = require("./config.json");
+const botprefix = config.prefix
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
   client.user.setActivity(`Use "Arm commands\" for commands list`); 
@@ -54,6 +54,12 @@ client.on("message", async message => {
     
     const homoMaths = Math.round(Math.random())?`not Homosex :heart_eyes:`:`Homosex :heart_eyes:`;
 
+	const botName = config.botName;
+	
+	const embedAccent = config.embedAccent;
+	
+	const embedFooter = config.embedFooter;
+	
 //
 //
 // VARIABLES, VALUES END
@@ -82,88 +88,33 @@ if(command === "ping") {
     message.channel.send(sayMessage);
 	console.log("<@" + messageAuthorId + "> made armbot say \"" + sayMessage + "\"");
   }
-  
-    if(command === "kick") {
-        if(!message.member.roles.cache.some(r=>["ArmBotBan", "Administrator"].includes(r.name)))
-          return message.reply("Sorry, you don't have permissions to use this!");
-        
-        let member = message.mentions.members.first() || message.guild.members.get(args[0]);
-        if(!member)
-          return message.reply("Please mention a valid member of this server");
-        if(!member.kickable) 
-          return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
-        
-        let reason = args.slice(1).join(' ');
-        if(!reason) reason = "No reason provided";
-        
-        await member.kick(reason)
-          .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
-        message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
-      }
-      
-      if(command === "ban") {
-        if(!message.member.roles.cache.some(r=>["ArmBotBan", "Administrator"].includes(r.name)))
-          return message.reply("Sorry, you don't have permissions to use this!");
-        
-        let member = message.mentions.members.first();
-        if(!member)
-          return message.reply("Please mention a valid member of this server");
-        if(!member.bannable) 
-          return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
-    
-        let reason = args.slice(1).join(' ');
-        if(!reason) reason = "No reason provided";
-        
-        await member.ban(reason)
-          .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
-        message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
-      }
-      
-      if(command === "purge") {
-        if(!message.member.roles.cache.some(r=>["ArmBotBan", "Administrator"].includes(r.name)))
-          return message.reply("Sorry, you don't have permissions to use this!");
-        
-        const deleteCount = parseInt(args[0], 10);
-        
-        if(!deleteCount || deleteCount < 1 || deleteCount > 200)
-          return message.reply("Please provide a number between 1 and 200 for the number of messages to delete");
-        
-        const fetched = await message.channel.messages.fetch({limit: deleteCount});
-        message.channel.bulkDelete(fetched)
-          .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
-      }
       
       if(command === "help") {
-        const m = await message.channel.send("no");
+        return message.channel.send("no");
       }
       
       if(command === "circle!") {
-        const m = await message.channel.send(":o *clik*");
+        return message.channel.send(":o *clik*");
       }
       
       if(command === "mad") {
-        const m = await message.channel.send("ass");
+        return message.channel.send("ass");
       }
       
       if(command === "gay") {
-          const m = await message.channel.send("Perhaps");
+        return message.channel.send("Perhaps");
       }
       
       if(command === "pog") {
-          message.delete().catch(O_o=>{}); 
-          const m = await message.channel.send("<:POGGERS:734793166359887924>");
-      }
-      
-      if(command === "@matt") {
-          message.delete().catch(O_o=>{});
-            const m = await message.channel.send("<@260462201641500683>");
+        message.delete().catch(O_o=>{}); 
+        return message.channel.send("<:POGGERS:734793166359887924>");
       }
             
       if(command === "commands") {
           const commandsListEmbed = new Discord.MessageEmbed()
-        .setColor('#ff0000')
+        .setColor(embedAccent)
         .setTitle('Commands List')
-        .setAuthor('ArmBot', 'https://cdn.discordapp.com/attachments/747834616773083238/768229321399074846/kaiarm.png', 'https://armbot.madas.xyz/')
+        .setAuthor(botName, 'https://cdn.discordapp.com/attachments/747834616773083238/768229321399074846/kaiarm.png', 'https://armbot.madas.xyz/')
          .addFields(
             { name: 'General User Commands', value: '|---------------------------------------------|' },
             { name: 'Link - gives you a link to armbots website!', value: 'Arm link' },
@@ -178,28 +129,12 @@ if(command === "ping") {
             { name: ':o  circle!', value: 'Arm circle!' },
             { name: 'There are more secret commands :)', value: '\u200B' },
         )
-        .setFooter('Awm#6125');
+        .setFooter(embedFooter);
         const m  = await message.channel.send(commandsListEmbed);
       }
       
-      if(command === "admincommands") {
-               const adminCommandsListEmbed = new Discord.MessageEmbed()
-        .setColor('#ff0000')
-        .setTitle('Commands List')
-        .setAuthor('ArmBot', 'https://cdn.discordapp.com/attachments/747834616773083238/768229321399074846/kaiarm.png', 'https://armbot.madas.xyz/')
-         .addFields(
-            { name: 'Admin Only Commands', value: '|---------------------------------------------|' },
-            { name: 'Ban - Ban a user!', value: 'Usage: Arm ban [user] [reason]' },
-            { name: 'Kick - kick a user!', value: 'Usage: Arm kick [user] [reason]' },
-            { name: 'Purge - delete 1 - 200 messages at once!', value: 'Usage: Arm purge [count]' },
-        )
-        .setFooter('Awm#6125');
-        
-        const m = await message.channel.send(adminCommandsListEmbed); 
-      }
-      
       if(command === "setstatus") {
-        if(!message.author.id === ("704011737900253315", "271737320116453376", "263333077890105344"))
+        if(!message.author.id === config.botOwnerId)
           return message.reply("Sorry, you don't have permissions to use this! *(Only the bot owner can use this >:)))*");
         const requestedStatus = args.join(" ");
           message.delete().catch(O_o=>{});
@@ -207,13 +142,14 @@ if(command === "ping") {
      }
      
       if(command === "resetstatus") {
-        if(!message.author.id === ("704011737900253315", "271737320116453376", "263333077890105344"))
+        if(!message.author.id === config.botOwnerId)
           return message.reply("Sorry, you don't have permissions to use this!");
           message.delete().catch(O_o=>{});
          client.user.setActivity('Serving ' + client.users.cache.size +' users');
      }
     
-      if(command === "tellmadas") {
+      /*
+	  if(command === "tellmadas") {
         const tellMadas = args.join(" ");
           message.delete().catch(O_o=>{}); 
           notifier.notify({
@@ -223,74 +159,75 @@ if(command === "ping") {
             sound: true
           });
       }
+	  */
       
       if(command === "owo") {
-          const m = await message.channel.send("Yucky ewwie, owo gross uwu better yes yes");
+          return message.channel.send("Yucky ewwie, owo gross uwu better yes yes");
       }
       
       if(command === "uwu") {
-          const randomMaths = Math.floor(Math.random() * 100) + 1;
-             message.channel.send("<@" + message.author.id +  "> is " + randomMaths + "% UwU! :heart_eyes:");
-			 console.log("<@" + message.author.id +  "> is " + randomMaths + "% UwU! :heart_eyes:")
+          const randomMaths = Math.floor(Math.random() * 101);
+			console.log("<@" + message.author.id +  "> is " + randomMaths + "% UwU! :heart_eyes:");
+			return message.channel.send("<@" + message.author.id +  "> is " + randomMaths + "% UwU! :heart_eyes:");
       }
       
       if(command === "sadge") {
           message.delete().catch(O_o=>{});
-          const m = await message.channel.send("<:Sadge:755836276883849246>") 
+          return message.channel.send("<:Sadge:755836276883849246>") 
       }
        
 	  if(command === "homosex") {
           if(message.author.id = "704011737900253315") {
             message.channel.send("<@704011737900253315> is homosex :heart_eyes:"); 
 		} else {
-            const m = await message.channel.send(`<@${message.author.id}> is ` + homoMaths);
+            return message.channel.send(`<@${message.author.id}> is ` + homoMaths);
 		}
 	  }
 	  
       if(command === "sand") {
-          const m = await message.channel.send("https://madas.xyz/images/snad.gif");
+          return message.channel.send("https://madas.xyz/snad.gif");
       }
      
       if(command === "link") {
-          const m = await message.channel.send("http://armbot.madas.xyz")
+          return message.channel.send("http://madas.xyz")
       }
       
       if(command === "lonk") {
-          const m = await messge.channel.send("are you rarted")
+          return messge.channel.send("are you rarted")
       }
       
        if(command === "cat") {
-          const m = await message.channel.send("https://cdn.discordapp.com/attachments/646790519007215646/784691495986921473/ERv9ddQh11zU_c8y.mp4");
+          return message.channel.send("https://cdn.discordapp.com/attachments/646790519007215646/784691495986921473/ERv9ddQh11zU_c8y.mp4");
       }
       
       if(command === "stats") {
            const statsListEmbed = new Discord.MessageEmbed()
-        .setColor('#ff0000')
+        .setColor(embedAccent)
         .setTitle('Bots stats')
-        .setAuthor('ArmBot', 'https://cdn.discordapp.com/attachments/747834616773083238/768229321399074846/kaiarm.png', 'http://armbot.madas.xyz/')
+        .setAuthor(botName, 'https://cdn.discordapp.com/attachments/747834616773083238/768229321399074846/kaiarm.png', 'http://armbot.madas.xyz/')
          .addFields(
             { name: 'The bot is in', value: client.guilds.cache.size + ' servers' },
             { name: 'Serving', value: client.users.cache.size + ' users' },
             { name: 'In', value: client.channels.cache.size + ' channels' },
         )
-        .setFooter('Discord: Madas_#6125 Twitter: @ArmBot3');
+        .setFooter(embedFooter);
         
-        const m  = await message.channel.send(statsListEmbed); 
+        return message.channel.send(statsListEmbed); 
       }
       
         if(command === "bees") {
-            const m = await message.channel.send("BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
+            return message.channel.send("BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
         }
 
         if(command === "fuck") {
             var fuck = args.join(" ");
            if(fuck === "you") {
-            const m = await message.channel.send("no u")
-            const m2 = await message.channel.send("https://cdn.discordapp.com/attachments/775119543756521502/811001104539975750/reverse.png");
+            message.channel.send("no u")
+            return message.channel.send("https://cdn.discordapp.com/attachments/775119543756521502/811001104539975750/reverse.png");
             } else if(fuck === "me") {
-                const m3 = await message.channel.send("Okay, daddy, uwu")
+                return message.channel.send("huh??")
                 } else {
-                    message.channel.send("FUCK YOU")
+                    return message.channel.send("FUCK YOU")
                 }
         }
 		
@@ -302,50 +239,29 @@ if(command === "ping") {
 		if(command === "cum") {
       var cum = args.join(" ");
       if(cum === "inside me") {
-        message.channel.send("what")
+        return message.channel.send("what")
       } else if(cum === "on me") {
-        message.channel.send("what")
+        return message.channel.send("what")
       } else {
-			message.channel.send("https://cdn.discordapp.com/attachments/781253408312786964/841782456029675550/220px-Glass_of_Milk_283365753553229.png")
+		return message.channel.send("https://cdn.discordapp.com/attachments/781253408312786964/841782456029675550/220px-Glass_of_Milk_283365753553229.png")
 		}
   }
 
 		if(command === "balls") {
-			messsage.channel.send("https://tenor.com/view/puffer-fish-fish-bounce-tap-gif-17107260")
+			return messsage.channel.send("https://tenor.com/view/puffer-fish-fish-bounce-tap-gif-17107260")
 		}
 		
-		if(command === "login") {
-			var password = args.join(" ");
-			message.delete().catch(O_o=>{});
-			if(message.author.id === "704011737900253315"){
-				const pass = sha256(password);
-				if(pass === "30a989afc82c0a21139573591de4e5ff37994f7d1506a9acf2b5997005c2649f") {
-					message.channel.send("Logged in!");
-					let role = message.guild.roles.cache.find(role => role.id == "848616868428382249")
-					message.author.roles.add(role);
-					function timeout() {
-						user.roles.remove(role)
-						message.channel.send("Time ran out pissbaby!");
-					}
-					setTimeout(timeout,1000)
-				} else {
-					message.channel.send("Fuck off, passwords wrong");
-				}
-			} else {
-				message.channel.send("Bruv you aint arm *stabs you*");
+		if(command === "eval") {
+			if (message.author.id !== config.botOwnerId)
+				return message.channel.send("This command is only for the bot owner!")
+			try {
+				const evaled = eval(args.join(" "));
+				var cleaned = await clean(evaled);
+				message.channel.send(`\`\`\`js\n${cleaned}\n\`\`\``);
+			} catch (err) {
+				message.channel.send(`\`\`\`xl\n${cleaned}\n\`\`\``);
 			}
-		}
-		
-		if(command === "logout") {
-			const user = message.author;
-			let role = message.guild.roles.cache.find(role => role.id == "848616868428382249")
-			user.roles.remove(role);
-			message.channel.send("Logged out!");
-		}
-		
-		if(command === "test69") {
-			const image = path.join(__dirname, "kaiarm.png")
-			message.channel.send(image);
+			
 		}
 
 //
@@ -354,4 +270,4 @@ if(command === "ping") {
 //
     });
     
-    client.login(process.env.BOT_TOKEN);
+    client.login(config.token);
