@@ -29,5 +29,5 @@ Default config:
  -  botName - Your bots username
 
 ## Why did i keep this piece of shit?
-Its a great feeling to look back at old code and just laugh at how much you didnt understand so mostly to see how far ive come
-Its funny cause like i didnt understand some js operators and indentation and like the best part is that i made all of this in notepad++ cause i didnt know vscode existed and i just thought its paid like everything else made by microsoft 
+imo it feels great to look back at old code and just laugh at how much you didnt understand.
+Its funny cause like i didnt understand some js operators, had inconsistent indentation and like the best part is that i made all of this in notepad++ cause i didnt know vscode existed cause i thought it was paid like everything else made by microsoft.
